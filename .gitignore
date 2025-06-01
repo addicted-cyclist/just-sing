@@ -42,3 +42,6 @@ next-env.d.ts
 
 # images
 refs/*
+
+# prisma
+/src/generated/prisma

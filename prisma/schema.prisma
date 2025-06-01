@@ -1,0 +1,49 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String   @id @default(uuid())
+  email       String   @unique
+  phoneNumber String?
+  password    String
+  tabs        Tab[]
+  favorites   Favorite[]
+}
+
+model Song {
+  id       String   @id @default(uuid())
+  title    String
+  artist   String
+  tabs     Tab[]
+}
+
+// TODO: rewrite comments in english
+model Tab {
+  id          String   @id @default(uuid())
+  content     String   // Текст или ссылка на файл
+  format      String   // "gp5", "txt", "json"
+  complexity  Int      // Уровень сложности
+  simplified  Boolean  // Флаг упрощения
+  song        Song     @relation(fields: [songId], references: [id])
+  songId      String
+  author      User     @relation(fields: [userId], references: [id])
+  userId      String
+  favorites   Favorite[]
+}
+
+model Favorite {
+  id     String @id @default(uuid())
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+  tab    Tab    @relation(fields: [tabId], references: [id])
+  tabId  String
+}
