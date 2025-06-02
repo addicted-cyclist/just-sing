@@ -11,12 +11,14 @@ datasource db {
 }
 
 model User {
-  id          String   @id @default(uuid())
-  email       String   @unique
-  phoneNumber String?
-  password    String
-  tabs        Tab[]
-  favorites   Favorite[]
+  id                    String   @id @default(uuid())
+  email                 String   @unique
+  phoneNumber           String?
+  password              String
+  passwordResetToken    String?
+  passwordResetExpires  DateTime?
+  tabs                  Tab[]
+  favorites             Favorite[]
 }
 
 model Song {
